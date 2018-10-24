@@ -4,12 +4,12 @@ It handles all input changes and binding their properties (including but not onl
 
 # Installation
 ```bash
-npm install blue-form
+npm install blue-forms
 ```
 
 # Usage
 ```javascript
-import Form from 'blue-form';
+import Form from 'blue-forms';
 
 const LabelCheck = (props) => (
   <React.Fragment>
