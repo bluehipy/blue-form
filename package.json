@@ -1,0 +1,26 @@
+{
+  "name": "blue-form",
+  "version": "1.0.0",
+  "description": "Smarter form for React",
+  "main": "./src/Form.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "react": "^16.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluehipy/blue-form.git"
+  },
+  "keywords": [
+    "form",
+    "forms"
+  ],
+  "author": "Andrei Patriciu <bluehipy@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bluehipy/blue-form/issues"
+  },
+  "homepage": "https://github.com/bluehipy/blue-form#readme"
+}
