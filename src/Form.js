@@ -54,7 +54,7 @@ class BlueForm extends React.Component {
     return React.cloneElement(child, newProps, newChildren);
   }
   getValue(propValue) {
-    let tmp = {...this.state},
+    let tmp = Object.assign({}, this.state),
         segments = propValue.split('.');
 
     while(segments.length>1) {
@@ -97,7 +97,7 @@ class BlueForm extends React.Component {
      }
 
     this.setState(state, () => {
-      this.props.onDataChange && (this.props.onDataChange({...this.state}));
+      this.props.onDataChange && (this.props.onDataChange(Object.assign({},this.state)));
     });
   }
 
@@ -121,14 +121,12 @@ class BlueForm extends React.Component {
     return propNames.filter(propName => propName.match(/^map_/))
   }
   render () {
-    const {children, onDataChange, ...formProps} = this.props;
-    const newChildren = this.parseChildren(children);
+    let formProps = Object.assign({}, this.props);
+    delete formProps.children;
+    delete formProps.onDataChange;
 
-    return (
-      <form {...formProps}>
-        {newChildren}
-      </form>
-    )
+    const newChildren = this.props && this.props.children && this.parseChildren(this.props.children);
+    return React.createElement('form', formProps, newChildren)
   }
 }
 
