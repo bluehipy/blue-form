@@ -3,14 +3,15 @@ import React from 'react';
 class BlueForm extends React.Component {
   constructor (props) {
     super(props);
+    let  initialData = Object.assign({}, props.data);
     this.state = Object.assign({}, props.data);
+    this.state.initialData = initialData;
   }
   parseChildren (children) {
     return React.Children.map(children, child => this.transformChild(child));
   }
   transformChild (child) {
-    console.log(child);
-    if (!child) {
+    if (!child || (child.props && child.props.skip)) {
       return child; // amazing :))
     }
     let newChildren = child.props && child.props.children && this.parseChildren(child.props.children);
@@ -29,6 +30,7 @@ class BlueForm extends React.Component {
     //map_value = "model_key"
     //map_checked = "model_key"
     //map_action = "true" >>> submit
+    //map_action = "false" >>> reset
     let needsChangeHandler = false,
           needsClickHandler = false;
       const newProps ={};
@@ -50,7 +52,6 @@ class BlueForm extends React.Component {
     });
     needsChangeHandler && this.decorateChangeHandler(child.props, newProps);
     needsClickHandler && this.decorateClickHandler(child.props, newProps);
-    console.log(child, newProps, newChildren);
     return React.cloneElement(child, newProps, newChildren);
   }
   getValue(propValue) {
@@ -112,7 +113,9 @@ class BlueForm extends React.Component {
 
   onClickHandler (props, e) {
     e.preventDefault();
-    this.props.onSubmit(Object.assign({}, this.state));
+    props.map_action === "true"
+    ? this.props.onSubmit(Object.assign({}, this.state))
+    : this.setState( Object.assign({}, this.props.data));
   }
 
   mappedPropsNames (child) {
@@ -120,13 +123,19 @@ class BlueForm extends React.Component {
 
     return propNames.filter(propName => propName.match(/^map_/))
   }
+  static getDerivedStateFromProps(props, state) {
+    if(JSON.stringify(props.data) !== JSON.stringify(state.initialData)) {
+      return Object.assign(state, props.data, {initialData:props.data})
+    }
+    return Object.assign({}, state);
+  }
   render () {
     let formProps = Object.assign({}, this.props);
     delete formProps.children;
     delete formProps.onDataChange;
 
     const newChildren = this.props && this.props.children && this.parseChildren(this.props.children);
-    return React.createElement('form', formProps, newChildren)
+    return React.createElement(formProps.skip ? 'p' : 'form', formProps, newChildren)
   }
 }
 
