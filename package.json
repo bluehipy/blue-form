@@ -1,6 +1,6 @@
 {
   "name": "blue-forms",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Smarter forms for React",
   "main": "./src/Form.js",
   "scripts": {
