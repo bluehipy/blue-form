@@ -135,7 +135,7 @@ class BlueForm extends React.Component {
     delete formProps.onDataChange;
 
     const newChildren = this.props && this.props.children && this.parseChildren(this.props.children);
-    return React.createElement(formProps.skip ? 'p' : 'form', formProps, newChildren)
+    return React.createElement(formProps.skip ? 'div' : 'form', formProps, newChildren)
   }
 }
 
